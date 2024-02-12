@@ -5,21 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 import java.time.Duration;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-public class Severity {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Superclass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    private String locationName;
+    private long id ;
     private String action;
-
+    private Duration duration;
 
 
 }

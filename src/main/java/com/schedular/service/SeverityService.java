@@ -1,16 +1,21 @@
 package com.schedular.service;
 
 import com.schedular.entity.Severity;
+import com.schedular.entity.Superclass;
 import com.schedular.repository.SeverityRepository;
+import com.schedular.repository.SuperclassRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Optional;
 
 @Service
 public class SeverityService {
 
+    @Autowired
+    private SuperclassRepository superclassRepository;
     @Autowired
     private SeverityRepository severityRepository;
 
@@ -21,8 +26,10 @@ public class SeverityService {
 
     }
 
-    private void startCountdown(Severity severity) {
-        Duration duration = severity.getDuration();
+    public void startCountdown(Severity severity) {
+        Optional<Superclass> ActionSuperclassObject = superclassRepository.findByAction(severity.getAction());
+        Duration duration = ActionSuperclassObject.get().getDuration();
+
         try {
             Thread.sleep(duration.toMillis()); // Sleep for the duration
             System.out.println("Your duration was finished: " + severity.getLocationName());
